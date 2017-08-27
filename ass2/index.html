@@ -1,0 +1,142 @@
+<?xml version = "1.0"  encoding = "utf-8" ?>
+<!DOCTYPE html PUBLIC "-//w3c//DTD XHTML 1.0 Strict//EN"
+
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+  <head> <title> Teo's Fruit Store </title>
+
+    <script type = "text/javascript">
+		//function to compute total cost after quantity input
+		function computeCost() {
+			var apples = document.getElementById("apples").value;
+			var oranges = document.getElementById("oranges").value;
+			var bananas = document.getElementById("bananas").value;
+			var totalCost=apples * 0.69 + oranges * 0.59 + bananas * 0.39;
+			var totalCostRoundUp=totalCost.toFixed(2); //rounds the total cost to 2 decimal points
+	 
+			document.getElementById("cost").value = totalCostRoundUp;
+		
+			document.getElementById("submit").disabled = false;	//enables the submit button
+			
+			//if input is not a positive integer 
+			if(isNaN(apples) || apples%1!=0 || apples<0){
+				document.getElementById("cost").value = "NaN";
+				document.getElementById("submit").disabled = true;
+				alert("Invalid number of apples! Positive integers only.");
+			}
+			if(isNaN(oranges) || oranges%1!=0 || oranges<0){
+				document.getElementById("cost").value = "NaN";
+				document.getElementById("submit").disabled = true;
+				alert("Invalid number of oranges! Positive integers only.");
+			}
+			if(isNaN(bananas) || bananas%1!=0 || bananas<0){
+				document.getElementById("cost").value = "NaN";
+				document.getElementById("submit").disabled = true;
+				alert("Invalid number of bananas! Positive integers only.");
+			}		
+		}  //computeCost
+		
+		//validate all entered details when click submit
+	  	function validateOrder() {
+			var apples = document.getElementById("apples").value;
+			var oranges = document.getElementById("oranges").value;
+			var bananas = document.getElementById("bananas").value;
+			var name = document.getElementById("name").value;
+			var cost= document.getElementById("cost").value;
+		
+			if(name==""){
+				alert("Please enter your name.");	
+				return false;
+			}		
+			if( (apples =="" && oranges=="" && bananas=="") ||(cost==0.00) ){
+				alert("Please order at least 1 fruit.");		
+				return false; 
+			}
+			//if input is not a positive integer 
+			if(isNaN(apples) || apples%1!=0 || apples<0){
+				document.getElementById("cost").value = "NaN";
+				alert("Invalid number of apples! Positive integers only.");
+				return false;
+			}
+			if(isNaN(oranges) || oranges%1!=0 || oranges<0){
+				document.getElementById("cost").value = "NaN";
+				alert("Invalid number of oranges! Positive integers only.");
+				return false;
+			}
+			if(isNaN(bananas) || bananas%1!=0 || bananas<0){
+				document.getElementById("cost").value = "NaN";
+				alert("Invalid number of bananas! Positive integers only.");
+				return false;
+			}
+		}
+    </script>
+  </head>
+
+  <body>
+    <form action = "submit.php"
+		  method ="post">
+      <h2> Teo's Fruit Store </h2>
+
+      <table border = "border">
+
+		<strong>Name:</strong> 
+		<input type = "text"  id = "name" name="name" placeholder="Enter name here" size ="20" "/>
+        
+		<tr>
+          <th> Product Name </th>
+          <th> Price </th>
+          <th> Quantity </th>
+        </tr>
+
+
+        <tr>
+          <th> Apples </th>
+          <td align = "center"> $0.69 </td>
+          <td align = "center"> <input type = "text"  size = "5"  id = "apples"  name="apples" placeholder="Apples"
+                      size ="3" onchange="computeCost()"/> </td>
+        </tr>
+        <tr>
+          <th> Oranges </th>
+          <td align = "center"> $0.59 </td>
+          <td align = "center"> <input type = "text"  size = "5"  id = "oranges"  name="oranges" placeholder="Oranges"
+                size = "3" onchange="computeCost()"/> </td>
+        </tr> 
+        <tr>
+          <th> Bananas </th>
+          <td align = "center"> $0.39 </td>
+          <td align = "center"> <input type = "text"  size = "5"  id = "bananas"  name="bananas" placeholder="Bananas"
+                size = "3" onchange="computeCost()"/></td>
+        </tr>
+		<tr>
+          <th>  </th>
+          <td> Total Cost: </td>
+          <td align = "right"> <input type = "text"  size = "5"  id = "cost" name="cost" placeholder="$0.00"
+               onfocus = "this.blur();" /></td>
+        </tr>
+		
+      </table>
+
+      <p>
+        Payment Method:<br />
+		<input type = "radio"  name = "payment"  value = "Visa" checked = "checked"/>
+        Visa
+        <br />
+		
+        <input type = "radio"  name = "payment"  value = "MasterCard" />
+		MasterCard
+        <br />
+		
+        <input type = "radio"  name = "payment"  value = "Discover"/>      
+        Discover
+        <br />
+      </p>
+	  	  
+	  <p>
+        <input type = "submit"  value = "Submit Order" onclick="return validateOrder();" id="submit" disabled /> 
+        <input type = "reset"  value = "Clear Order Form" />
+      </p>
+	   	  
+    </form>
+  </body>
+</html>
